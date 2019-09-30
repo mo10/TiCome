@@ -1,4 +1,4 @@
-﻿namespace TiComeOn
+﻿namespace TiCome
 {
     partial class MainForm
     {
@@ -40,13 +40,16 @@
             this.obfsParamHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.remarksHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.protocolHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.button2 = new System.Windows.Forms.Button();
             this.protocolParamHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.statusText = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(461, 12);
+            this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -84,7 +87,7 @@
             this.nodeList.Location = new System.Drawing.Point(12, 41);
             this.nodeList.MultiSelect = false;
             this.nodeList.Name = "nodeList";
-            this.nodeList.Size = new System.Drawing.Size(868, 415);
+            this.nodeList.Size = new System.Drawing.Size(803, 380);
             this.nodeList.TabIndex = 2;
             this.nodeList.UseCompatibleStateImageBehavior = false;
             this.nodeList.View = System.Windows.Forms.View.Details;
@@ -92,7 +95,7 @@
             // serverHeader
             // 
             this.serverHeader.Text = "服务器地址";
-            this.serverHeader.Width = 82;
+            this.serverHeader.Width = 104;
             // 
             // portHeader
             // 
@@ -105,19 +108,22 @@
             // passHeader
             // 
             this.passHeader.Text = "密码";
+            this.passHeader.Width = 93;
             // 
             // methodHeader
             // 
             this.methodHeader.Text = "加密";
+            this.methodHeader.Width = 102;
             // 
             // obfsHeader
             // 
             this.obfsHeader.Text = "混淆";
+            this.obfsHeader.Width = 95;
             // 
             // obfsParamHeader
             // 
             this.obfsParamHeader.Text = "混淆参数";
-            this.obfsParamHeader.Width = 70;
+            this.obfsParamHeader.Width = 102;
             // 
             // remarksHeader
             // 
@@ -127,31 +133,63 @@
             // 
             this.protocolHeader.Text = "协议";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(12, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "换个饼干";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // protocolParamHeader
             // 
             this.protocolParamHeader.Text = "协议参数";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(740, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "饼干设置";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(659, 12);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "保存所有";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // statusText
+            // 
+            this.statusText.AutoSize = true;
+            this.statusText.Location = new System.Drawing.Point(93, 17);
+            this.statusText.Name = "statusText";
+            this.statusText.Size = new System.Drawing.Size(0, 12);
+            this.statusText.TabIndex = 5;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(13, 444);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(185, 12);
+            this.linkLabel1.TabIndex = 6;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "https://github.com/mo10/TiCome";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(892, 468);
+            this.ClientSize = new System.Drawing.Size(827, 468);
+            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.statusText);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.nodeList);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
-            this.Text = "梯来！！！";
+            this.Text = "梯来";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,6 +211,9 @@
         private System.Windows.Forms.ColumnHeader protocolHeader;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ColumnHeader protocolParamHeader;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label statusText;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

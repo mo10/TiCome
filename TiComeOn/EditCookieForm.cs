@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TiComeOn
+namespace TiCome
 {
     public partial class EditCookieForm : Form
     {
