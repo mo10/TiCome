@@ -84,7 +84,10 @@ namespace TiCome
             WebClient client = new WebClient();
             Stream data = client.OpenRead(url);
             StreamReader reader = new StreamReader(data);
+
+           
             return reader.ReadToEnd();
+
         }
     }
 }

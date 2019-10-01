@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace TiCome
 {
@@ -44,7 +46,7 @@ namespace TiCome
                    
 
                     var configs = JsonConvert.DeserializeObject<GuiConfig>(jsonText);
-                    if(configs !=null)
+                    if (configs != null && configs.configs != null && configs.configs.Count > 0)
                     {
                         nodeList.BeginUpdate();
                         foreach (var config in configs.configs)
@@ -59,8 +61,11 @@ namespace TiCome
                             item.SubItems.Add(config.remarks);
                             item.SubItems.Add(config.protocol);
                             item.SubItems.Add(config.protocolparam);
+                            item.SubItems.Add("-");
+                            item.Tag = config;
 
                             nodeList.Items.Add(item);
+
                             loadedConfig.configs.Add(config);
                         }
                         nodeList.EndUpdate();
@@ -78,6 +83,7 @@ namespace TiCome
                     MessageBox.Show(ex.Message);
                 }
             }
+            nodeList.EndUpdate();
             button1.Enabled = true;
             button1.Text = "梯来!";
         }
@@ -110,6 +116,78 @@ namespace TiCome
         {
             EditCookieForm editCookie = new EditCookieForm(this);
             editCookie.ShowDialog();
+        }
+
+        private async void button4_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = false;
+            button4.Enabled = false;
+            foreach(ListViewItem item in nodeList.Items)
+            {
+                SSRConfig config = (SSRConfig)item.Tag;
+                var pingItem = item.SubItems[item.SubItems.Count - 1];
+                pingItem.Text = "测试中";
+                try
+                {
+                    var result = await AsyncSend(config.server);
+                    if (result.Status != IPStatus.Success)
+                    {
+                        pingItem.Text = "失败";
+                    }
+                    else
+                    {
+                        pingItem.Text = result.RoundtripTime.ToString();
+                    }
+                }catch(Exception ex)
+                {
+                    pingItem.Text = "错误";
+                }
+            }
+            button1.Enabled = true;
+            button4.Enabled = true;
+        }
+        private Task<PingReply> AsyncSend(string address)
+        {
+            var ping = new System.Net.NetworkInformation.Ping();
+            return Task.Run(() => ping.Send(address));
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            GuiConfig guiConfig = new GuiConfig();
+            guiConfig.configs = new List<SSRConfig>();
+
+            foreach(ListViewItem item in nodeList.Items)
+            {
+                SSRConfig config = (SSRConfig)item.Tag;
+                var pingItem = item.SubItems[item.SubItems.Count - 1];
+
+                try
+                {
+                    int ping = int.Parse(pingItem.Text);
+                    guiConfig.configs.Add(config);
+                }
+                catch(Exception ex)
+                {
+                    // do nothing
+                }
+            }
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Config|*.json";
+            saveFileDialog1.Title = "Save node config";
+            saveFileDialog1.FileName = "gui-config.json";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                using (StreamWriter file = File.CreateText(saveFileDialog1.FileName))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Formatting = Formatting.Indented;
+                    serializer.Serialize(file, guiConfig);
+                }
+            }
         }
     }
 }

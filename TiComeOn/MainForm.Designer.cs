@@ -45,6 +45,9 @@
             this.button3 = new System.Windows.Forms.Button();
             this.statusText = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.button4 = new System.Windows.Forms.Button();
+            this.pingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -72,22 +75,23 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.nodeList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.serverHeader,
-            this.portHeader,
             this.udpPortHeader,
+            this.portHeader,
             this.passHeader,
             this.methodHeader,
             this.obfsHeader,
             this.obfsParamHeader,
             this.remarksHeader,
             this.protocolHeader,
-            this.protocolParamHeader});
+            this.protocolParamHeader,
+            this.pingHeader});
             this.nodeList.FullRowSelect = true;
             this.nodeList.GridLines = true;
             this.nodeList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.nodeList.Location = new System.Drawing.Point(12, 41);
             this.nodeList.MultiSelect = false;
             this.nodeList.Name = "nodeList";
-            this.nodeList.Size = new System.Drawing.Size(803, 380);
+            this.nodeList.Size = new System.Drawing.Size(909, 426);
             this.nodeList.TabIndex = 2;
             this.nodeList.UseCompatibleStateImageBehavior = false;
             this.nodeList.View = System.Windows.Forms.View.Details;
@@ -167,19 +171,46 @@
             // 
             // linkLabel1
             // 
+            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(13, 444);
+            this.linkLabel1.Location = new System.Drawing.Point(13, 470);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(185, 12);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "https://github.com/mo10/TiCome";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(443, 12);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 7;
+            this.button4.Text = "Ping测试";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // pingHeader
+            // 
+            this.pingHeader.Text = "延迟";
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(524, 12);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(129, 23);
+            this.button5.TabIndex = 8;
+            this.button5.Text = "保存可连通服务器";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 468);
+            this.ClientSize = new System.Drawing.Size(933, 494);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.statusText);
             this.Controls.Add(this.button3);
@@ -214,6 +245,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label statusText;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ColumnHeader pingHeader;
+        private System.Windows.Forms.Button button5;
     }
 }
 
