@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="howto.png" />
+    <None Include="Include\Empty.txt" />
     <EmbeddedResource Include="Include\Newtonsoft.Json.dll" />
     <EmbeddedResource Include="Include\HtmlAgilityPack.dll" />
   </ItemGroup>
