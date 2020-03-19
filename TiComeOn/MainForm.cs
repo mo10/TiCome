@@ -1,5 +1,4 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,85 +6,84 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TiCome.Data;
+
 namespace TiCome
 {
     public partial class MainForm : Form
     {
-        private GithubSearch search;
-        private int currentPage;
+        private GithubSearch searcher;
+        private int pageIndex;
 
-        private GuiConfig loadedConfig;
-        
         public MainForm()
         {
             InitializeComponent();
-            search = new GithubSearch();
-            loadedConfig = new GuiConfig();
-            loadedConfig.configs = new List<SSRConfig>();
-            currentPage = 1;
+            searcher = new GithubSearch();
+            pageIndex = 0;
         }
+
         public void SetCookie(string cookie)
         {
-            search.Cookie = cookie;
+            searcher.SetCookie(cookie);
         }
         public string GetCookie()
         {
-            return search.Cookie;
+            return searcher.Cookie;
+        }
+
+        private ListViewItem ToListViewItem(NodeConfig node)
+        {
+            ListViewItem item = new ListViewItem(node.server);
+            item.SubItems.Add(node.server_port.ToString());
+            item.SubItems.Add(node.server_udp_port.ToString());
+            item.SubItems.Add(node.password);
+            item.SubItems.Add(node.method);
+            item.SubItems.Add(node.obfs);
+            item.SubItems.Add(node.obfsparam);
+            item.SubItems.Add(node.remarks);
+            item.SubItems.Add(node.protocol);
+            item.SubItems.Add(node.protocolparam);
+            item.SubItems.Add("未测试");
+            item.Tag = node;
+            return item;
         }
         private async void button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
             button1.Text = "加载中...";
+
+            pageIndex++;
             try
             {
-                List<string> list = await search.AsyncLoadPage(currentPage);
-                currentPage++;
-                foreach(string s in list)
+                List<string> list = await searcher.AsyncLoadPage(pageIndex);
+                foreach (string s in list)
                 {
-                    string jsonText = await search.AsyncGetUrl(s);
-                   
-
+                    string jsonText = await searcher.AsyncGetUrl(s);
                     var configs = JsonConvert.DeserializeObject<GuiConfig>(jsonText);
+                    // Load NodeConfigs
                     if (configs != null && configs.configs != null && configs.configs.Count > 0)
                     {
                         nodeList.BeginUpdate();
-                        foreach (var config in configs.configs)
+                        foreach (var node in configs.configs)
                         {
-                            ListViewItem item = new ListViewItem(config.server);
-                            item.SubItems.Add(config.server_port.ToString());
-                            item.SubItems.Add(config.server_udp_port.ToString());
-                            item.SubItems.Add(config.password);
-                            item.SubItems.Add(config.method);
-                            item.SubItems.Add(config.obfs);
-                            item.SubItems.Add(config.obfsparam);
-                            item.SubItems.Add(config.remarks);
-                            item.SubItems.Add(config.protocol);
-                            item.SubItems.Add(config.protocolparam);
-                            item.SubItems.Add("-");
-                            item.Tag = config;
-
-                            nodeList.Items.Add(item);
-
-                            loadedConfig.configs.Add(config);
+                            if (node.server == null || node.server == string.Empty)
+                                continue;
+                            if (node.server.IndexOf("0.0.0") >= 0 || node.server == "127.0.0.1")
+                                continue;
+                            nodeList.Items.Add(ToListViewItem(node));
                         }
                         nodeList.EndUpdate();
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                if (ex.Message.Equals("No Cookie"))
-                {
-                    MessageBox.Show("没有饼干，请填写饼干");
-                }
-                else
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                MessageBox.Show(ex.Message);
             }
+            
             nodeList.EndUpdate();
             button1.Enabled = true;
-            button1.Text = "梯来!";
+            button1.Text = "再来点";
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -95,6 +93,14 @@ namespace TiCome
 
         private void button3_Click(object sender, EventArgs e)
         {
+            GuiConfig guiConfig = new GuiConfig();
+            guiConfig.configs = new List<NodeConfig>();
+
+            foreach (ListViewItem item in nodeList.Items)
+            {
+                guiConfig.configs.Add((NodeConfig)item.Tag);
+            }
+
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Config|*.json";
             saveFileDialog1.Title = "Save node config";
@@ -107,15 +113,14 @@ namespace TiCome
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Formatting = Formatting.Indented;
-                    serializer.Serialize(file, loadedConfig);
+                    serializer.Serialize(file, guiConfig);
                 }
             }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            EditCookieForm editCookie = new EditCookieForm(this);
-            editCookie.ShowDialog();
+
         }
 
         private async void button4_Click(object sender, EventArgs e)
@@ -124,42 +129,62 @@ namespace TiCome
             button4.Enabled = false;
             foreach(ListViewItem item in nodeList.Items)
             {
-                SSRConfig config = (SSRConfig)item.Tag;
+                NodeConfig config = (NodeConfig)item.Tag;
                 var pingItem = item.SubItems[item.SubItems.Count - 1];
                 pingItem.Text = "测试中";
-                try
+
+                var result = await AsyncSend(config.server);
+                if (result == -1)
                 {
-                    var result = await AsyncSend(config.server);
-                    if (result.Status != IPStatus.Success)
-                    {
-                        pingItem.Text = "失败";
-                    }
-                    else
-                    {
-                        pingItem.Text = result.RoundtripTime.ToString();
-                    }
-                }catch(Exception ex)
+                    pingItem.Text = "失败";
+                }
+                else if (result < -1)
                 {
                     pingItem.Text = "错误";
                 }
+                else if(result >= 0)
+                {
+                    pingItem.Text = result.ToString();
+                }
+                
             }
             button1.Enabled = true;
             button4.Enabled = true;
         }
-        private Task<PingReply> AsyncSend(string address)
+        private Task<long> AsyncSend(string address)
         {
-            var ping = new System.Net.NetworkInformation.Ping();
-            return Task.Run(() => ping.Send(address));
+            
+            return Task.Run(() => {
+                long val = -1;
+                try
+                {
+                    var ping = new Ping();
+                    var ret = ping.Send(address);
+                    if (ret.Status == IPStatus.Success)
+                    {
+                        val = ret.RoundtripTime;
+                    }
+                    else
+                    {
+                        val = -1;
+                    }
+                }
+                catch (Exception)
+                {
+                    val = -2;
+                }
+                return val;
+                });
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             GuiConfig guiConfig = new GuiConfig();
-            guiConfig.configs = new List<SSRConfig>();
+            guiConfig.configs = new List<NodeConfig>();
 
             foreach(ListViewItem item in nodeList.Items)
             {
-                SSRConfig config = (SSRConfig)item.Tag;
+                NodeConfig config = (NodeConfig)item.Tag;
                 var pingItem = item.SubItems[item.SubItems.Count - 1];
 
                 try
@@ -167,7 +192,7 @@ namespace TiCome
                     int ping = int.Parse(pingItem.Text);
                     guiConfig.configs.Add(config);
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     // do nothing
                 }

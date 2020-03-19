@@ -32,8 +32,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.nodeList = new System.Windows.Forms.ListView();
             this.serverHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.portHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.udpPortHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.portHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.passHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.methodHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.obfsHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -41,12 +41,12 @@
             this.remarksHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.protocolHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.protocolParamHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.statusText = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.button4 = new System.Windows.Forms.Button();
-            this.pingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -88,6 +88,7 @@
             this.nodeList.FullRowSelect = true;
             this.nodeList.GridLines = true;
             this.nodeList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.nodeList.HideSelection = false;
             this.nodeList.Location = new System.Drawing.Point(12, 41);
             this.nodeList.MultiSelect = false;
             this.nodeList.Name = "nodeList";
@@ -101,13 +102,13 @@
             this.serverHeader.Text = "服务器地址";
             this.serverHeader.Width = 104;
             // 
-            // portHeader
-            // 
-            this.portHeader.Text = "端口";
-            // 
             // udpPortHeader
             // 
             this.udpPortHeader.Text = "UDP端口";
+            // 
+            // portHeader
+            // 
+            this.portHeader.Text = "端口";
             // 
             // passHeader
             // 
@@ -140,6 +141,10 @@
             // protocolParamHeader
             // 
             this.protocolParamHeader.Text = "协议参数";
+            // 
+            // pingHeader
+            // 
+            this.pingHeader.Text = "延迟";
             // 
             // button2
             // 
@@ -190,10 +195,6 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // pingHeader
-            // 
-            this.pingHeader.Text = "延迟";
-            // 
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(524, 12);
@@ -219,6 +220,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "梯来";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
