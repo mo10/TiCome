@@ -34,5 +34,22 @@ namespace TiCome.Data
         public bool enable { get; private set; } = false;
         [JsonProperty]
         public bool udp_over_tcp { get; private set; } = false;
+        [JsonProperty]
+        public string geoip = string.Empty;
+    }
+    public class IPSBObject
+    {
+        public string organization { get; set; }
+        public string longitude { get; set; }
+        public string timezone { get; set; }
+        public string isp { get; set; }
+        public string offset { get; set; }
+        public string asn { get; set; }
+        public string asn_organization { get; set; }
+        public string country { get; set; }
+        public string ip { get; set; }
+        public string latitude { get; set; }
+        public string continent_code { get; set; }
+        public string country_code { get; set; }
     }
 }

@@ -42,6 +42,7 @@
             this.protocolHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.protocolParamHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pingHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.GeoIPHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.statusText = new System.Windows.Forms.Label();
@@ -52,9 +53,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
+            this.button1.Location = new System.Drawing.Point(12, 13);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 0;
             this.button1.Text = "梯来!";
             this.button1.UseVisualStyleBackColor = true;
@@ -63,9 +64,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 70);
+            this.label1.Location = new System.Drawing.Point(22, 76);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 12);
+            this.label1.Size = new System.Drawing.Size(0, 13);
             this.label1.TabIndex = 1;
             // 
             // nodeList
@@ -84,73 +85,90 @@
             this.remarksHeader,
             this.protocolHeader,
             this.protocolParamHeader,
-            this.pingHeader});
+            this.pingHeader,
+            this.GeoIPHeader});
             this.nodeList.FullRowSelect = true;
             this.nodeList.GridLines = true;
             this.nodeList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.nodeList.HideSelection = false;
-            this.nodeList.Location = new System.Drawing.Point(12, 41);
+            this.nodeList.Location = new System.Drawing.Point(12, 44);
             this.nodeList.MultiSelect = false;
             this.nodeList.Name = "nodeList";
-            this.nodeList.Size = new System.Drawing.Size(909, 426);
+            this.nodeList.Size = new System.Drawing.Size(936, 461);
             this.nodeList.TabIndex = 2;
             this.nodeList.UseCompatibleStateImageBehavior = false;
             this.nodeList.View = System.Windows.Forms.View.Details;
             // 
             // serverHeader
             // 
+            this.serverHeader.DisplayIndex = 0;
             this.serverHeader.Text = "服务器地址";
             this.serverHeader.Width = 104;
             // 
             // udpPortHeader
             // 
+            this.udpPortHeader.DisplayIndex = 1;
             this.udpPortHeader.Text = "UDP端口";
             // 
             // portHeader
             // 
+            this.portHeader.DisplayIndex = 2;
             this.portHeader.Text = "端口";
             // 
             // passHeader
             // 
+            this.passHeader.DisplayIndex = 3;
             this.passHeader.Text = "密码";
             this.passHeader.Width = 93;
             // 
             // methodHeader
             // 
+            this.methodHeader.DisplayIndex = 4;
             this.methodHeader.Text = "加密";
             this.methodHeader.Width = 102;
             // 
             // obfsHeader
             // 
+            this.obfsHeader.DisplayIndex = 5;
             this.obfsHeader.Text = "混淆";
             this.obfsHeader.Width = 95;
             // 
             // obfsParamHeader
             // 
+            this.obfsParamHeader.DisplayIndex = 6;
             this.obfsParamHeader.Text = "混淆参数";
             this.obfsParamHeader.Width = 102;
             // 
             // remarksHeader
             // 
+            this.remarksHeader.DisplayIndex = 7;
             this.remarksHeader.Text = "备注";
             // 
             // protocolHeader
             // 
+            this.protocolHeader.DisplayIndex = 8;
             this.protocolHeader.Text = "协议";
             // 
             // protocolParamHeader
             // 
+            this.protocolParamHeader.DisplayIndex = 9;
             this.protocolParamHeader.Text = "协议参数";
             // 
             // pingHeader
             // 
+            this.pingHeader.DisplayIndex = 10;
             this.pingHeader.Text = "延迟";
+            // 
+            // GeoIPHeader
+            // 
+            this.GeoIPHeader.DisplayIndex = 11;
+            this.GeoIPHeader.Text = "地理位置";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(740, 12);
+            this.button2.Location = new System.Drawing.Point(740, 13);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(75, 25);
             this.button2.TabIndex = 3;
             this.button2.Text = "饼干设置";
             this.button2.UseVisualStyleBackColor = true;
@@ -158,9 +176,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(659, 12);
+            this.button3.Location = new System.Drawing.Point(659, 13);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(75, 25);
             this.button3.TabIndex = 4;
             this.button3.Text = "保存所有";
             this.button3.UseVisualStyleBackColor = true;
@@ -169,27 +187,27 @@
             // statusText
             // 
             this.statusText.AutoSize = true;
-            this.statusText.Location = new System.Drawing.Point(93, 17);
+            this.statusText.Location = new System.Drawing.Point(93, 18);
             this.statusText.Name = "statusText";
-            this.statusText.Size = new System.Drawing.Size(0, 12);
+            this.statusText.Size = new System.Drawing.Size(0, 13);
             this.statusText.TabIndex = 5;
             // 
             // linkLabel1
             // 
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(13, 470);
+            this.linkLabel1.Location = new System.Drawing.Point(13, 509);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(185, 12);
+            this.linkLabel1.Size = new System.Drawing.Size(167, 13);
             this.linkLabel1.TabIndex = 6;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "https://github.com/mo10/TiCome";
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(443, 12);
+            this.button4.Location = new System.Drawing.Point(443, 13);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(75, 25);
             this.button4.TabIndex = 7;
             this.button4.Text = "Ping测试";
             this.button4.UseVisualStyleBackColor = true;
@@ -197,9 +215,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(524, 12);
+            this.button5.Location = new System.Drawing.Point(524, 13);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(129, 23);
+            this.button5.Size = new System.Drawing.Size(129, 25);
             this.button5.TabIndex = 8;
             this.button5.Text = "保存可连通服务器";
             this.button5.UseVisualStyleBackColor = true;
@@ -207,9 +225,9 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(933, 494);
+            this.ClientSize = new System.Drawing.Size(960, 535);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.linkLabel1);
@@ -250,6 +268,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ColumnHeader pingHeader;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ColumnHeader GeoIPHeader;
     }
 }
 
