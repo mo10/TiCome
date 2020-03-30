@@ -35,9 +35,11 @@
   <ItemGroup>
     <Reference Include="HtmlAgilityPack, Version=1.11.23.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.23\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -119,9 +121,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\packages\HtmlAgilityPack.1.11.23\lib\Net45\HtmlAgilityPack.dll">
+      <Link>Include\HtmlAgilityPack.dll</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll">
+      <Link>Include\Newtonsoft.Json.dll</Link>
+    </EmbeddedResource>
     <Content Include="howto.png" />
-    <Content Include="Include\HtmlAgilityPack.dll" />
-    <Content Include="Include\Newtonsoft.Json.dll" />
     <None Include="Include\Empty.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

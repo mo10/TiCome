@@ -36,6 +36,7 @@ namespace TiCome
         private ListViewItem ToListViewItem(NodeConfig node)
         {
             ListViewItem item = new ListViewItem(node.server);
+
             item.SubItems.Add(node.server_port.ToString());
             item.SubItems.Add(node.server_udp_port.ToString());
             item.SubItems.Add(node.password);
@@ -45,12 +46,49 @@ namespace TiCome
             item.SubItems.Add(node.remarks);
             item.SubItems.Add(node.protocol);
             item.SubItems.Add(node.protocolparam);
-            item.SubItems.Add("未测试");
-            item.SubItems.Add(node.geoip);
+
+            var ping = new ListViewItem.ListViewSubItem();
+            ping.Name = "PingItem";
+            ping.Text = "未测试";
+            ping.Tag = false;
+
+            var geoip = new ListViewItem.ListViewSubItem();
+            geoip.Name = "GeoIPItem";
+            geoip.Text = "未测试";
+            geoip.Tag = false;
+
+            item.SubItems.Add(ping);
+            item.SubItems.Add(geoip);
+
             item.Tag = node;
             return item;
         }
+        private Task<long> AsyncPing(string address)
+        {
 
+            return Task.Run(() =>
+            {
+                long val = -1;
+                try
+                {
+                    var ping = new Ping();
+                    var ret = ping.Send(address);
+                    if (ret.Status == IPStatus.Success)
+                    {
+                        val = ret.RoundtripTime;
+                    }
+                    else
+                    {
+                        val = -1;
+                    }
+                }
+                catch (Exception)
+                {
+                    val = -2;
+                }
+                return val;
+            });
+        }
         private async Task<IPSBObject> RequestIPSBAPI(string ip) 
         {
             bool flag = false; // dns resolve ok flag
@@ -95,55 +133,12 @@ namespace TiCome
             return null; // return error result
         }
 
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            button1.Enabled = false;
-            button1.Text = "加载中...";
-
-            pageIndex++;
-            try
-            {
-                List<string> list = await searcher.AsyncLoadPage(pageIndex);
-                foreach (string s in list)
-                {
-                    string jsonText = await searcher.AsyncGetUrl(s);
-                    var configs = JsonConvert.DeserializeObject<GuiConfig>(jsonText);
-                    // Load NodeConfigs
-                    if (configs != null && configs.configs != null && configs.configs.Count > 0)
-                    {
-                        nodeList.BeginUpdate();
-                        foreach (var node in configs.configs)
-                        {
-                            if (node.server == null || node.server == string.Empty)
-                                continue;
-                            if (node.server.IndexOf("0.0.0") >= 0 || node.server == "127.0.0.1")
-                                continue;
-                            IPSBObject GeoIPResult = await RequestIPSBAPI(node.server); // Request country
-                            if (GeoIPResult == null || GeoIPResult.country == string.Empty) // detect if null result
-                                continue;
-                            node.geoip = GeoIPResult.country; // update node
-                            nodeList.Items.Add(ToListViewItem(node));
-                        }
-                        nodeList.EndUpdate();
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            
-            nodeList.EndUpdate();
-            button1.Enabled = true;
-            button1.Text = "再来点";
-        }
-        private void button2_Click(object sender, EventArgs e)
+        private void SetCookie_Click(object sender, EventArgs e)
         {
             EditCookieForm editCookie = new EditCookieForm(this);
             editCookie.ShowDialog();
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        private void SaveAll_Click(object sender, EventArgs e)
         {
             GuiConfig guiConfig = new GuiConfig();
             guiConfig.configs = new List<NodeConfig>();
@@ -169,66 +164,111 @@ namespace TiCome
                 }
             }
         }
-
-        private void MainForm_Load(object sender, EventArgs e)
+        private async void PingTest_Click(object sender, EventArgs e)
         {
+            StartBtn.Enabled = false;
+            PingBtn.Enabled = false;
 
-        }
-
-        private async void button4_Click(object sender, EventArgs e)
-        {
-            button1.Enabled = false;
-            button4.Enabled = false;
-            foreach(ListViewItem item in nodeList.Items)
+            foreach (ListViewItem item in nodeList.Items)
             {
-                NodeConfig config = (NodeConfig)item.Tag;
-                var pingItem = item.SubItems[item.SubItems.Count - 1];
+                NodeConfig node = (NodeConfig)item.Tag;
+                var pingItem = item.SubItems["PingItem"];
+                // 跳过已ping
+                if ((bool)pingItem.Tag == true)
+                {
+                    continue;
+                }
                 pingItem.Text = "测试中";
+                var result = await AsyncPing(node.server);
+                nodeList.Invoke(new Action(() =>
+                {
+                    if (result == -1)
+                    {
+                        pingItem.Text = "失败";
+                    }
+                    else if (result < -1)
+                    {
+                        pingItem.Text = "错误";
 
-                var result = await AsyncSend(config.server);
-                if (result == -1)
-                {
-                    pingItem.Text = "失败";
-                }
-                else if (result < -1)
-                {
-                    pingItem.Text = "错误";
-                }
-                else if(result >= 0)
-                {
-                    pingItem.Text = result.ToString();
-                }
-                
+                    }
+                    else if (result >= 0)
+                    {
+                        pingItem.Text = result.ToString();
+                    }
+                    // 完成ping
+                    pingItem.Tag = true;
+                }));
             }
-            button1.Enabled = true;
-            button4.Enabled = true;
+            StartBtn.Enabled = true;
+            PingBtn.Enabled = true;
         }
-        private Task<long> AsyncSend(string address)
+        private async void GeoIPTest_Click(object sender, EventArgs e)
         {
-            
-            return Task.Run(() => {
-                long val = -1;
-                try
+            StartBtn.Enabled = false;
+            GeoIPBtn.Enabled = false;
+            foreach (ListViewItem item in nodeList.Items)
+            {
+                NodeConfig node = (NodeConfig)item.Tag;
+                var geoipItem = item.SubItems["GeoIPItem"];
+                // 跳过已ping
+                if ((bool)geoipItem.Tag == true)
                 {
-                    var ping = new Ping();
-                    var ret = ping.Send(address);
-                    if (ret.Status == IPStatus.Success)
-                    {
-                        val = ret.RoundtripTime;
-                    }
-                    else
-                    {
-                        val = -1;
-                    }
+                    continue;
                 }
-                catch (Exception)
+                geoipItem.Text = "测试中";
+                IPSBObject GeoIPResult = await RequestIPSBAPI(node.server); // Request country
+                if (GeoIPResult == null || GeoIPResult.country == string.Empty)
                 {
-                    val = -2;
+                    geoipItem.Text = "失败";
                 }
-                return val;
-                });
+                else
+                {
+                    geoipItem.Text = GeoIPResult.country; // update node
+                }
+                geoipItem.Tag = true;
+            }
+            StartBtn.Enabled = true;
+            GeoIPBtn.Enabled = true;
         }
+        private async void Start_Click(object sender, EventArgs e)
+        {
+            StartBtn.Enabled = false;
+            StartBtn.Text = "加载中...";
 
+            pageIndex++;
+            try
+            {
+                List<string> list = await searcher.AsyncLoadPage(pageIndex);
+                foreach (string s in list)
+                {
+                    string jsonText = await searcher.AsyncGetUrl(s);
+                    var configs = JsonConvert.DeserializeObject<GuiConfig>(jsonText);
+                    // Load NodeConfigs
+                    if (configs != null && configs.configs != null && configs.configs.Count > 0)
+                    {
+                        nodeList.BeginUpdate();
+                        foreach (var node in configs.configs)
+                        {
+                            if (node.server == null || node.server == string.Empty)
+                                continue;
+                            if (node.server.IndexOf("0.0.0") >= 0 || node.server == "127.0.0.1")
+                                continue;
+
+                            nodeList.Items.Add(ToListViewItem(node));
+                        }
+                        nodeList.EndUpdate();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            nodeList.EndUpdate();
+            StartBtn.Enabled = true;
+            StartBtn.Text = "再来点";
+        }
         private void button5_Click(object sender, EventArgs e)
         {
             GuiConfig guiConfig = new GuiConfig();

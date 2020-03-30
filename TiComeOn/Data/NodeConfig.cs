@@ -34,8 +34,6 @@ namespace TiCome.Data
         public bool enable { get; private set; } = false;
         [JsonProperty]
         public bool udp_over_tcp { get; private set; } = false;
-        [JsonProperty]
-        public string geoip = string.Empty;
     }
     public class IPSBObject
     {
