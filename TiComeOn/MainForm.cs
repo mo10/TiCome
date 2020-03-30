@@ -109,7 +109,8 @@ namespace TiCome
                 }
                 if (!flag)
                 {
-                    ip = Dns.GetHostEntry(ip).ToString(); // save resolve result
+                    IPAddress ResultIPList = Dns.GetHostEntry(ip).AddressList[0]; // save resolve result
+                    ip = ResultIPList.ToString();
                 }
             }
 
@@ -122,7 +123,7 @@ namespace TiCome
                 {
                     var resultJSONText = response.Content.ReadAsStringAsync().Result;
                     IPSBObject resultJSONObj = JsonConvert.DeserializeObject<IPSBObject>(resultJSONText);
-                    return resultJSONObj; // returl oj8k result
+                    return resultJSONObj; // return ok result
                 }
             }
             catch (Exception ex)
