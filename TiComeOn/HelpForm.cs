@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TiCome
 {
-    public partial class Howto : Form
+    public partial class HelpForm : Form
     {
-        public Howto()
+        public HelpForm()
         {
             InitializeComponent();
         }

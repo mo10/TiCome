@@ -1,6 +1,6 @@
 ﻿namespace TiCome
 {
-    partial class Howto
+    partial class HelpForm
     {
         /// <summary>
         /// Required designer variable.
@@ -45,13 +45,13 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // Howto
+            // HelpForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1212, 607);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "Howto";
+            this.Name = "HelpForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "如何找到user_session";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

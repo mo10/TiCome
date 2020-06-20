@@ -12,42 +12,42 @@ namespace TiCome
 {
     public partial class EditCookieForm : Form
     {
-        private MainForm parent;
-        private Howto howto;
+        private MainForm mainForm;
+        private HelpForm helpForm;
 
-        public EditCookieForm(MainForm parent)
+        public EditCookieForm(MainForm parentForm)
         {
             InitializeComponent();
-            howto = new Howto();
-            if(parent != null && !parent.IsDisposed)
+            helpForm = new HelpForm();
+            if(parentForm != null && !parentForm.IsDisposed)
             {
-                this.parent = parent;
-                user_session.Text = this.parent.GetCookie();
+                this.mainForm = parentForm;
+                user_session.Text = this.mainForm.GetCookie();
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(parent == null || parent.IsDisposed)
+            if(mainForm == null || mainForm.IsDisposed)
             {
-                parent = new MainForm();
-                parent.FormClosed += (s, args) => this.Close();
+                mainForm = new MainForm();
+                mainForm.FormClosed += (s, args) => this.Close();
             }
-            parent.SetCookie(user_session.Text);
-            parent.Show();
+            mainForm.SetCookie(user_session.Text);
+            mainForm.Show();
             this.Hide();
-            howto?.Close();
+            helpForm?.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             
-            if(howto == null || howto.IsDisposed)
+            if(helpForm == null || helpForm.IsDisposed)
             {
-                howto = new Howto();
+                helpForm = new HelpForm();
             }
-            howto.Hide();
-            howto.Show();
+            helpForm.Hide();
+            helpForm.Show();
         }
     }
 }
