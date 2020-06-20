@@ -10,5 +10,8 @@ namespace TiCome.Data
         public string Group { get; private set; } = string.Empty;
         [JsonProperty]
         public long LastUpdateTime { get; private set; } = 0;
+
+        [JsonIgnore]
+        public object Tag = null;
     }
 }

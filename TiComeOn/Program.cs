@@ -31,7 +31,7 @@ namespace TiCome
                 {
                     if (stream == null)
                         return null;
-                    Byte[] assemblyData = new Byte[stream.Length];
+                    byte[] assemblyData = new byte[stream.Length];
 
                     stream.Read(assemblyData, 0, assemblyData.Length);
 

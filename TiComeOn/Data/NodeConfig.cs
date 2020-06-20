@@ -34,6 +34,13 @@ namespace TiCome.Data
         public bool enable { get; private set; } = false;
         [JsonProperty]
         public bool udp_over_tcp { get; private set; } = false;
+
+        [JsonIgnore]
+        public long ping = -1; // -1: no tested; -2: in process; -3 failed;
+        [JsonIgnore]
+        public string country = string.Empty;
+        [JsonIgnore]
+        public object Tag = null;
     }
     public class IPSBObject
     {

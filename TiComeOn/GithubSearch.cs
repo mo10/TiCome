@@ -39,7 +39,7 @@ namespace TiCome
         public List<string> LoadPage(int page)
         {
             List<string> vs = new List<string>();
-            string url = $"https://github.com/search?p={page}&q=filename%3Agui-config.json&s=indexed&type=Code";
+            string url = $"https://github.com/search?q=filename%3Agui-config.json&s=indexed&type=Code&p={page}";
 
             var doc = GetHtml(url);
 
