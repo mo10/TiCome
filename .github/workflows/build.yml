@@ -1,0 +1,37 @@
+name: Build a Release
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      slnFile: TiCome.sln
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Setup nuget
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: NuGet restore
+      run: nuget restore $env:slnFile
+
+    - name: Build
+      run: msbuild $env:slnFile /p:Configuration=Release /p:Platform="Any CPU"
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Release
+        path: TiComeOn/bin/Release
