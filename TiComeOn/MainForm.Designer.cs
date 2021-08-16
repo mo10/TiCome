@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("未分组");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("订阅1");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("订阅2");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("订阅3");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("ShadowsocksR", new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("未分组");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("订阅1");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("订阅2");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("订阅3");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("ShadowsocksR", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4});
             this.StartBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.SetCookieBtn = new System.Windows.Forms.Button();
@@ -83,6 +83,8 @@
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.NodeMenu_TestPing = new System.Windows.Forms.ToolStripMenuItem();
             this.NodeMenu_TestGeo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -169,18 +171,18 @@
             this.GroupTree.HideSelection = false;
             this.GroupTree.Location = new System.Drawing.Point(0, 0);
             this.GroupTree.Name = "GroupTree";
-            treeNode6.Name = "节点2";
-            treeNode6.Text = "未分组";
-            treeNode7.Name = "节点5";
-            treeNode7.Text = "订阅1";
-            treeNode8.Name = "节点6";
-            treeNode8.Text = "订阅2";
-            treeNode9.Name = "节点7";
-            treeNode9.Text = "订阅3";
-            treeNode10.Name = "节点0";
-            treeNode10.Text = "ShadowsocksR";
+            treeNode1.Name = "节点2";
+            treeNode1.Text = "未分组";
+            treeNode2.Name = "节点5";
+            treeNode2.Text = "订阅1";
+            treeNode3.Name = "节点6";
+            treeNode3.Text = "订阅2";
+            treeNode4.Name = "节点7";
+            treeNode4.Text = "订阅3";
+            treeNode5.Name = "节点0";
+            treeNode5.Text = "ShadowsocksR";
             this.GroupTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode10});
+            treeNode5});
             this.GroupTree.PathSeparator = "/";
             this.GroupTree.Size = new System.Drawing.Size(199, 433);
             this.GroupTree.TabIndex = 10;
@@ -280,7 +282,7 @@
             this.SubsList.HideSelection = false;
             this.SubsList.Location = new System.Drawing.Point(0, 0);
             this.SubsList.Name = "SubsList";
-            this.SubsList.Size = new System.Drawing.Size(864, 117);
+            this.SubsList.Size = new System.Drawing.Size(863, 117);
             this.SubsList.TabIndex = 4;
             this.SubsList.UseCompatibleStateImageBehavior = false;
             this.SubsList.View = System.Windows.Forms.View.Details;
@@ -298,21 +300,24 @@
             // SubsMenu
             // 
             this.SubsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem7,
             this.SubsMenu_CopySelectedSubs,
             this.SubsMenu_SaveSelectedSubs});
             this.SubsMenu.Name = "SubsMenu";
-            this.SubsMenu.Size = new System.Drawing.Size(173, 48);
+            this.SubsMenu.Size = new System.Drawing.Size(197, 92);
             // 
             // SubsMenu_CopySelectedSubs
             // 
+            this.SubsMenu_CopySelectedSubs.Enabled = false;
             this.SubsMenu_CopySelectedSubs.Name = "SubsMenu_CopySelectedSubs";
-            this.SubsMenu_CopySelectedSubs.Size = new System.Drawing.Size(172, 22);
+            this.SubsMenu_CopySelectedSubs.Size = new System.Drawing.Size(196, 22);
             this.SubsMenu_CopySelectedSubs.Text = "复制所选订阅地址";
             // 
             // SubsMenu_SaveSelectedSubs
             // 
+            this.SubsMenu_SaveSelectedSubs.Enabled = false;
             this.SubsMenu_SaveSelectedSubs.Name = "SubsMenu_SaveSelectedSubs";
-            this.SubsMenu_SaveSelectedSubs.Size = new System.Drawing.Size(172, 22);
+            this.SubsMenu_SaveSelectedSubs.Size = new System.Drawing.Size(196, 22);
             this.SubsMenu_SaveSelectedSubs.Text = "保存所选订阅地址";
             // 
             // NodeList
@@ -339,7 +344,7 @@
             this.NodeList.HideSelection = false;
             this.NodeList.Location = new System.Drawing.Point(0, 123);
             this.NodeList.Name = "NodeList";
-            this.NodeList.Size = new System.Drawing.Size(864, 310);
+            this.NodeList.Size = new System.Drawing.Size(863, 310);
             this.NodeList.TabIndex = 2;
             this.NodeList.UseCompatibleStateImageBehavior = false;
             this.NodeList.View = System.Windows.Forms.View.Details;
@@ -395,55 +400,73 @@
             // NodeMenu
             // 
             this.NodeMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem6,
             this.NodeMenu_Show,
-            this.toolStripMenuItem3,
             this.NodeMenu_CopySelectedNode,
+            this.toolStripMenuItem3,
             this.NodeMenu_SaveSelectedNode,
             this.toolStripMenuItem4,
             this.NodeMenu_TestPing,
             this.NodeMenu_TestGeo});
             this.NodeMenu.Name = "NodeMenu";
-            this.NodeMenu.Size = new System.Drawing.Size(173, 126);
+            this.NodeMenu.Size = new System.Drawing.Size(197, 148);
             // 
             // NodeMenu_Show
             // 
+            this.NodeMenu_Show.Enabled = false;
             this.NodeMenu_Show.Name = "NodeMenu_Show";
-            this.NodeMenu_Show.Size = new System.Drawing.Size(172, 22);
+            this.NodeMenu_Show.Size = new System.Drawing.Size(196, 22);
             this.NodeMenu_Show.Text = "详细信息";
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(169, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(193, 6);
             // 
             // NodeMenu_CopySelectedNode
             // 
+            this.NodeMenu_CopySelectedNode.Enabled = false;
             this.NodeMenu_CopySelectedNode.Name = "NodeMenu_CopySelectedNode";
-            this.NodeMenu_CopySelectedNode.Size = new System.Drawing.Size(172, 22);
+            this.NodeMenu_CopySelectedNode.Size = new System.Drawing.Size(196, 22);
             this.NodeMenu_CopySelectedNode.Text = "复制所选节点链接";
             // 
             // NodeMenu_SaveSelectedNode
             // 
+            this.NodeMenu_SaveSelectedNode.Enabled = false;
             this.NodeMenu_SaveSelectedNode.Name = "NodeMenu_SaveSelectedNode";
-            this.NodeMenu_SaveSelectedNode.Size = new System.Drawing.Size(172, 22);
+            this.NodeMenu_SaveSelectedNode.Size = new System.Drawing.Size(196, 22);
             this.NodeMenu_SaveSelectedNode.Text = "保存所选节点";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(169, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(193, 6);
             // 
             // NodeMenu_TestPing
             // 
+            this.NodeMenu_TestPing.Enabled = false;
             this.NodeMenu_TestPing.Name = "NodeMenu_TestPing";
-            this.NodeMenu_TestPing.Size = new System.Drawing.Size(172, 22);
+            this.NodeMenu_TestPing.Size = new System.Drawing.Size(196, 22);
             this.NodeMenu_TestPing.Text = "Ping测试";
             // 
             // NodeMenu_TestGeo
             // 
+            this.NodeMenu_TestGeo.Enabled = false;
             this.NodeMenu_TestGeo.Name = "NodeMenu_TestGeo";
-            this.NodeMenu_TestGeo.Size = new System.Drawing.Size(172, 22);
+            this.NodeMenu_TestGeo.Size = new System.Drawing.Size(196, 22);
             this.NodeMenu_TestGeo.Text = "Geo查询节点位置";
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(196, 22);
+            this.toolStripMenuItem6.Text = "咕咕咕，在做了在做了";
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(196, 22);
+            this.toolStripMenuItem7.Text = "咕咕咕，在做了在做了";
             // 
             // MainForm
             // 
@@ -518,6 +541,8 @@
         private System.Windows.Forms.ToolStripMenuItem SubsMenu_SaveSelectedSubs;
         private System.Windows.Forms.ToolStripMenuItem TreeMenu_SelectNode;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
     }
 }
 
